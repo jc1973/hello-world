@@ -75,7 +75,7 @@ resource "aws_api_gateway_deployment" "hello_world_deployment" {
 }
 
 
-output "root_url" {
+output "deployment_url" {
   value = "${aws_api_gateway_deployment.hello_world_deployment.invoke_url}"
 }
 

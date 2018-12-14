@@ -1,0 +1,34 @@
+#!/usr/bin/perl
+
+$profile = "default";
+$profile = $ARGV[0] if ( $ARGV[0] );
+
+print "Using profile: $profile\n";
+
+open (FILEREAD,"$ENV{'HOME'}/.aws/credentials") or die "Cannot open file $ENV{'HOME'}/.aws/credentials for reading\n";
+@file_contents = <FILEREAD>;
+close (FILEREAD);
+
+$output = "";
+$get_creds = 0;
+foreach $line(@file_contents) {
+  chomp $line;
+  if ( $line eq "\[$profile\]" ) {
+   $get_creds = 1; 
+  }
+  if (( $get_creds > 0 ) && ( $line =~ /aws_access_key_id\s*=\s*(\S+)/ )) {
+    $output .= "export TF_VAR_aws_access_key_id=$1\n";
+    $get_creds ++;
+  }
+  if (( $get_creds > 0 ) && ( $line =~ /aws_secret_access_key\s*=\s*(\S+)/ )) {
+    $output .= "export TF_VAR_aws_secret_access_key=$1\n";
+    $get_creds ++;
+  }
+  if ( $get_creds  == 3 ) { 
+    open (WRITE_FILE,">/tmp/tf-aws-account-var") or die "Cannot open file /tmp/tf-aws-account-var for writing\n";
+    print WRITE_FILE $output;
+    close (WRITE_FILE);
+    print "Now source: /tmp/tf-aws-account-var\n. /tmp/tf-aws-account-var\n";
+    exit 0;
+  }
+}
