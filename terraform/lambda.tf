@@ -9,7 +9,7 @@ resource "aws_lambda_function" "hello_world_lambda_function" {
   function_name = "lambda-${ var.project }${ var.environment }"
   role = "${aws_iam_role.lambda_role.arn}"
   handler = "index.handler"
-  runtime = "nodejs4.3"
+  runtime = "nodejs8.10"
   source_code_hash = "${base64sha256(file("${data.archive_file.lambda.output_path}"))}"
   publish = true
 }
