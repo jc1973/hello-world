@@ -20,30 +20,37 @@ The following directories are used:
 The code for the hello-world application is located in a subdirectory in the
 nodejs directory.
 The code to deploy the nodejs application is located in the terraform directory.
-
-
-
-
+  
+  
 ### Helper Script
-
-
-There is a helperscript - tf-aws-account-var - in the terraform directory - this
-will use the default profile found in ${HOME}/.aws/credentials if a profile is
-not specified, to help set the environment variables:
+  
+There is a helper script - tf-aws-account-var - located in the terraform
+directory - which will use the default profile found in ${HOME}/.aws/credentials
+(if a profile is not specified it will use the default profile) to help set the
+environment variables:
 
 ```bash
 TF_VAR_aws_access_key_id
 TF_VAR_aws_secret_access_key
 ```
 
-If an AWS profile is not specified. To use a different AWS profile, use this
-script with specifying a different profile:
+To use a different AWS profile, use this script with specifying a different
+profile, i.e.:
 
 ```bash
 ./tf-aws-account-var [profile_name]
 ```
 
-You will 
+This helper script does not need to be used (and likewise the script which it
+creates to set the environment variable), as when the terraform code is
+executed, it will prompt for both the `aws_access_key_id` and the
+`aws_secret_access_key`.
+  
+  
+### Deploying the web application.
+  
+
+
 
 terraform init
 terraform plan
