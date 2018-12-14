@@ -48,11 +48,34 @@ executed, it will prompt for both the `aws_access_key_id` and the
   
   
 ### Deploying the web application.
-  
 
-
-
+```bash
+cd terraform
 terraform init
 terraform plan
+```
+
+If everything looks okay:
+
+```bash
 terraform apply
-terraform destroy 
+```
+
+Answer yes to the question, the url is provided as an output. You are able to go
+to this address and you should be able to see 'Hello World'.
+
+
+The nodejs code is deployed as a lamba function which is triggered via the AWS
+API Gateway.
+
+The `lamba.tf` terraform code creates a zip file of the nodejs code and uploads
+it to AWS as a Lamba funtion. 
+
+The `api_gateway.tf` sets up the API gateway to trigger the lamba function when
+the endpoint is called. 
+  
+**Note: Please perform the following after the you have verified that everything
+is working:**
+```bash
+terraform destroy
+```
