@@ -61,8 +61,9 @@ If everything looks okay:
 terraform apply
 ```
 
-Answer yes to the question, the url is provided as an output. You are able to go
-to this address and you should be able to see 'Hello World'.
+Answer yes to the question, the url is provided as a terraform output called
+`deployment_url`.  You are should be able to go to this address and you should
+see 'Hello World'.
 
 
 The nodejs code is deployed as a lamba function which is triggered via the AWS
